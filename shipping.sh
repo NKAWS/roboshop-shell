@@ -15,7 +15,7 @@ mv target/shipping-1.0.jar shipping.jar
 systemctl daemon-reload
 
 yum install mysql -y
-mysql -h <MYSQL-SERVER-IPADDRESS> -uroot -pRoboShop@1 < /app/schema/shipping.sql
+mysql -h mysql.nkdevops74.online -uroot -pRoboShop@1 < /app/schema/shipping.sql
 
 
 
