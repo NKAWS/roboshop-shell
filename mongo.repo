@@ -1,7 +1,5 @@
-cp mongo.repo /etc/yum.repos.d/mongo.repo
-yum install mongodb-org -y
-
-# update listen address from 127.0.0.0 to 0.0.0.0
-
-systemctl enable mongod
-systemctl restart mongod
+[mongodb-org-4.2]
+name=MongoDB Repository
+baseurl=https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/4.2/x86_64/
+gpgcheck=0
+enabled=1
