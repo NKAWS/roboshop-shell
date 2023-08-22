@@ -3,7 +3,7 @@ yum module disable mysql -y
 yum install mysql-community-server -y
 
 
-mysql -uroot -pRoboShop@1
+
 
 systemctl enable mysqld
 systemctl restart mysqld
