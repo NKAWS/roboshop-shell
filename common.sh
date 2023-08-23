@@ -1,7 +1,7 @@
 log=/tmp/roboshop.log
 func_apppreq()  {
      echo -e "\e[36m<<<<<<<<<<<<<<<< Create User Service >>>>>>>>>>>>>>\e[0m"
-    cp catalogue.service /etc/systemd/system/${component}.service &>>${log}
+    cp ${component}.service /etc/systemd/system/${component}.service &>>${log}
        echo -e "\e[36m<<<<<<<<<<<<<<<< Create Application User >>>>>>>>>>>>>>\e[0m"
     useradd roboshop &>>${log}
        echo -e "\e[36m<<<<<<<<<<<<<<<< Cleaning the content >>>>>>>>>>>>>>\e[0m"
@@ -16,7 +16,7 @@ func_apppreq()  {
     cd /app
 }
 func_systemd() {
-        echo -e "\e[36m<<<<<<<<<<<<<<<< Start Catalogue service >>>>>>>>>>>>>>\e[0m"
+        echo -e "\e[36m<<<<<<<<<<<<<<<< Start ${component} service >>>>>>>>>>>>>>\e[0m"
     systemctl daemon-reload &>>${log}
     systemctl enable ${component} &>>${log}
     systemctl restart ${component} &>>${log}
@@ -44,8 +44,7 @@ nodejs() {
 
 }
 function_java() {
-  echo -e "\e[36m<<<<<<<<<<<<<<<<Create ${component} Service >>>>>>>>>>>>>>\e[0m"
-  cp ${component}.service /etc/systemd/system/${component}.service &>>${log}
+
   echo -e "\e[36m<<<<<<<<<<<<<<<<Install Maven >>>>>>>>>>>>>>\e[0m"
   yum install maven -y &>>${log}
 
@@ -65,7 +64,7 @@ func_python () {
   echo -e "\e[36m<<<<<<<<<<<<<<<<Build ${component} Service >>>>>>>>>>>>>>\e[0m"
   yum install python36 gcc python3-devel -y &>>${log}
 
-  useradd roboshop
+
 
   func_apppreq
   echo -e "\e[36m<<<<<<<<<<<<<<<<Build ${component} Service >>>>>>>>>>>>>>\e[0m"
