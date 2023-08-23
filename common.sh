@@ -21,6 +21,20 @@ func_systemd() {
     systemctl enable ${component} &>>${log}
     systemctl restart ${component} &>>${log}
 }
+func_schema_setup() {
+  if [ "${schema_type}" == "mongodb" ]; then
+      echo -e "\e[36m<<<<<<<<<<<<<<<<Install Mongo client >>>>>>>>>>>>>>\e[0m"
+    yum install mongodb-org-shell -y &>>${log}
+        echo -e "\e[36m<<<<<<<<<<<<<<<< Load Catalogue schema >>>>>>>>>>>>>>\e[0m"
+    mongo --host mongodb.nkdevops74.online </app/schema/${component}.js &>>${log}
+  fi
+  if [ "${schema_type}" == "mysql" ]; then
+   echo -e "\e[36m<<<<<<<<<<<<<<<<Install mysql client >>>>>>>>>>>>>>\e[0m"
+    yum install mysql -y &>>${log}
+    echo -e "\e[36m<<<<<<<<<<<<<<<<load schema >>>>>>>>>>>>>>\e[0m"
+    mysql -h mysql.nkdevops74.online -uroot -pRoboShop@1 < /app/schema/${component}.sql &>>${log}
+  fi
+}
 nodejs() {
   log=/tmp/roboshop.log
 
@@ -35,10 +49,7 @@ nodejs() {
 
       echo -e "\e[36m<<<<<<<<<<<<<<<< Download nodeJS dependencies >>>>>>>>>>>>>>\e[0m"
   npm install &>>${log}
-      echo -e "\e[36m<<<<<<<<<<<<<<<<Install Mongo client >>>>>>>>>>>>>>\e[0m"
-  yum install mongodb-org-shell -y &>>${log}
-      echo -e "\e[36m<<<<<<<<<<<<<<<< Load Catalogue schema >>>>>>>>>>>>>>\e[0m"
-  mongo --host mongodb.nkdevops74.online </app/schema/${component}.js &>>${log}
+  func_schema_setup
 
   func_systemd
 
@@ -53,10 +64,7 @@ function_java() {
   mvn clean package &>>${log}
   mv target/${component}-1.0.jar ${component}.jar &>>${log}
 
-  echo -e "\e[36m<<<<<<<<<<<<<<<<Install mysql client >>>>>>>>>>>>>>\e[0m"
-  yum install mysql -y &>>${log}
-  echo -e "\e[36m<<<<<<<<<<<<<<<<load schema >>>>>>>>>>>>>>\e[0m"
-  mysql -h mysql.nkdevops74.online -uroot -pRoboShop@1 < /app/schema/${component}.sql &>>${log}
+  func_schema_setup
 
   func_systemd
 }
