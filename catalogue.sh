@@ -1,29 +1,29 @@
-   echo "<<<<<<<<<<<<<<<< Create Catalogue Service >>>>>>>>>>>>>>>"
+   echo -e "\e[36m<<<<<<<<<<<<<<<< Create Catalogue Service >>>>>>>>>>>>>>\e[0m"
 cp catalogue.service /etc/systemd/system/catalogue.service
-   echo "<<<<<<<<<<<<<<<< Create Mongodb Repo >>>>>>>>>>>>>>>"
-cp mongo.repo /etc/yum.repos.d/mongo.repo
-   echo "<<<<<<<<<<<<<<<< Install nodejs Repos >>>>>>>>>>>>>>>"
+   echo -e "\e[36m<<<<<<<<<<<<<<<< Create Mongodb Repo >>>>>>>>>>>>>>\e[0m"
+cp mongo.repo /etc/yum.repos.d/mongo.repoec
+   echo -e "\e[36m<<<<<<<<<<<<<<<< Install nodejs Repos >>>>>>>>>>>>>>\e[0m"
 curl -sL https://rpm.nodesource.com/setup_lts.x | bash
-   echo "<<<<<<<<<<<<<<<< Install NodeJS >>>>>>>>>>>>>>>"
+   echo -e "\e[36m<<<<<<<<<<<<<<<< Install NodeJS >>>>>>>>>>>>>>\e[0m"
 yum install nodejs -y
-   echo "<<<<<<<<<<<<<<<< Create Application User >>>>>>>>>>>>>>>"
+   echo -e "\e[36m<<<<<<<<<<<<<<<< Create Application User >>>>>>>>>>>>>>\e[0m"
 useradd roboshop
-   echo "<<<<<<<<<<<<<<<< Create Application Directory >>>>>>>>>>>>>>>"
+   echo -e "\e[36m<<<<<<<<<<<<<<<< Create Application Directory >>>>>>>>>>>>>>\e[0m"
 mkdir /app
-   echo "<<<<<<<<<<<<<<<< Download Application Content >>>>>>>>>>>>>>>"
+   echo -e "\e[36m<<<<<<<<<<<<<<<< Download Application Content >>>>>>>>>>>>>>\e[0m"
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue.zip
-    echo "<<<<<<<<<<<<<<<< Extraction Application Content >>>>>>>>>>>>>>>"
+    echo -e "\e[36m<<<<<<<<<<<<<<<< Extraction Application Content >>>>>>>>>>>>>>\e[0m"
 cd /app
 unzip /tmp/catalogue.zip
 cd /app
-    echo "<<<<<<<<<<<<<<<< Download nodeJS dependencies >>>>>>>>>>>>>>>"
+    echo -e "\e[36m<<<<<<<<<<<<<<<< Download nodeJS dependencies >>>>>>>>>>>>>>\e[0m"
 npm install
-    echo "<<<<<<<<<<<<<<<<Install Mongo client >>>>>>>>>>>>>>>"
+    echo -e "\e[36m<<<<<<<<<<<<<<<<Install Mongo client >>>>>>>>>>>>>>\e[0m"
 yum install mongodb-org-shell -y
-    echo "<<<<<<<<<<<<<<<< Load Catalogue schema >>>>>>>>>>>>>>>"
+    echo -e "\e[36m<<<<<<<<<<<<<<<< Load Catalogue schema >>>>>>>>>>>>>>\e[0m"
 mongo --host mongodb.nkdevops74.online </app/schema/catalogue.js
 
-    echo "<<<<<<<<<<<<<<<< Start Catalogue service >>>>>>>>>>>>>>>"
+    echo -e "\e[36m<<<<<<<<<<<<<<<< Start Catalogue service >>>>>>>>>>>>>>\e[0m"
 systemctl daemon-reload
 systemctl enable catalogue
 systemctl restart catalogue
